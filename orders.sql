@@ -45,7 +45,7 @@ FROM(SELECT CUSTOMER_ID, sum(PRICE) AS MAX_SUN
 FROM (SELECT * FROM ORDERS O 
 JOIN Products P on O.PRODUCT_ID = P.ID
 JOIN Customer C on O.CUSTOMER_ID = C.ID) 
-group by CUSTOMER_ID)
+GROUP BY CUSTOMER_ID)
 
 /*3. Find customers without orders*/
 
@@ -62,7 +62,7 @@ SELECT CUSTOMER_ID, sum(PRICE) AS SUN_OF_ALL_ORDERS
 FROM (SELECT * FROM ORDERS O 
 JOIN Products P on O.PRODUCT_ID = P.ID
 JOIN Customer C on O.CUSTOMER_ID = C.ID) 
-group by CUSTOMER_ID
+GROUP BY CUSTOMER_ID
 
 /*6. Create a query that returns the customer list and for each customer the average amount of his orders*/
 
@@ -70,7 +70,7 @@ SELECT CUSTOMER_ID, avg(PRICE) AS AVG
 FROM (SELECT * FROM ORDERS O 
 JOIN Products P on O.PRODUCT_ID = P.ID
 JOIN Customer C on O.CUSTOMER_ID = C.ID) 
-group by CUSTOMER_ID
+GROUP BY CUSTOMER_ID
 
 /*7. Create a query that returns the list of customers whose purchases exceeded the average order amount*/
 
