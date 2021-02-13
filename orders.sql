@@ -49,12 +49,16 @@ GROUP BY CUSTOMER_ID)
 
 /*3. Find customers without orders*/
 
-
+SELECT * FROM Customer C
+WHERE NOT EXISTS (SELECT C.NAME FROM ORDERS O
+WHERE C.ID = O.CUSTOMER_ID)
 
 /*4. Find incorrect records in the order table - that is, records that contain a customer 
 that does not exist or an order that does not exist*/
 
-
+SELECT * FROM ORDERS O
+WHERE NOT EXISTS (SELECT * FROM Customer C
+WHERE O.CUSTOMER_ID = C.ID)
 
 /*5. Create a query that returns the customer list and for each customer the amount of his total orders*/
 
@@ -74,7 +78,12 @@ GROUP BY CUSTOMER_ID
 
 /*7. Create a query that returns the list of customers whose purchases exceeded the average order amount*/
 
-
+SELECT CUSTOMER_ID, sum(PRICE) AS SUM_OF_ORDERS
+FROM (SELECT * FROM ORDERS O 
+JOIN Products P on O.PRODUCT_ID = P.ID
+JOIN Customer C on O.CUSTOMER_ID = C.ID) 
+GROUP BY CUSTOMER_ID
+HAVING SUM_OF_ORDERS > avg(PRICE);
 
 /*8. Find the sum of all orders of all customers together*/
 
@@ -92,4 +101,8 @@ JOIN Customer C on O.CUSTOMER_ID = C.ID
 GROUP BY O.PRODUCT_ID)
 
 /*10. Find the items that were not bought at all */
+
+SELECT * FROM Products P
+WHERE NOT EXISTS (SELECT P.NAME FROM ORDERS O
+WHERE P.ID = O.PRODUCT_ID)
 
